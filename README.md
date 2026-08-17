@@ -343,8 +343,13 @@ https://www.linkedin.com/in/ramya-ruba/
 ✅ Image upload
 
 ✅ Detail page
+
 ✅ Map & geolocation
+
 ✅ Redux Toolkit
+
 ✅ React Router SPA
+
 ✅ SEO metadata
+
 ✅ Responsive UI
