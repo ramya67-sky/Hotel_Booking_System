@@ -1,60 +1,55 @@
 # 🌌 Zonova – Hotel Management System
 
-A full-stack Hotel Management application built with **ReactJS, Redux Toolkit, Node.js, Express, and PostgreSQL**.
+Zonova is a full-stack Hotel Management System developed using ReactJS, Redux Toolkit, Node.js, Express.js, and PostgreSQL.
 
-Zonova provides a responsive hotel listing interface with CRUD operations, search and price filters, pagination, image uploads, hotel details, map-based location display, and SEO optimization.
+The application supports hotel CRUD operations, image upload, search, price filtering, pagination, hotel details, and map-based location display.
 
-## ✨ Features
+## Features
 
 ### Hotel Management
 
-* Add new hotels with validation
-* Edit existing hotel details using the same reusable form
-* Permanently delete hotels with confirmation
-* Delete associated uploaded images from the server
-* Image upload with preview
-* Success messages and delete confirmation popup
+* Add a hotel with form validation
+* Edit existing hotel details
+* Delete hotels with confirmation
+* Upload and preview hotel images
+* Reuse the same form for Add and Edit
 
 ### Hotel Listing
 
-* Card-based hotel list
+* Display hotels as cards
 * Search hotels by title
-* Filter hotels by minimum and maximum price
-* Dynamic pagination using `limit` and `offset`
-* Pagination automatically adjusts based on total matching hotels
-* Responsive layout for different screen sizes
+* Filter by minimum and maximum price
+* Pagination using limit and offset
+* Responsive layout
 
 ### Hotel Details
 
-* Dedicated hotel detail page
-* Full hotel information
-* Hotel image and description
-* Latitude and longitude
-* Interactive map using Leaflet
-* Browser Geolocation API for current location
-* Navigation using React Router
+* View complete hotel information
+* Display hotel image and description
+* Show latitude and longitude
+* Display hotel location using Leaflet map
+* Get current location using browser Geolocation API
+* Navigate using React Router
 
-### SEO & Accessibility
+### Other
 
-* Dynamic page titles using React Helmet
-* Dynamic meta descriptions
-* `alt` attributes for hotel images
-* Single Page Application architecture
+* Redux Toolkit for state management
+* React Helmet for page title and meta description
+* Responsive UI
+* Image upload using Multer
+* PostgreSQL database with native SQL queries
 
-## 🛠️ Technology Stack
+## Tech Stack
 
 ### Frontend
 
 * ReactJS
 * Redux Toolkit
-* React Redux
 * React Router DOM
 * Axios
 * React Helmet Async
 * React Leaflet
-* Leaflet
-* HTML
-* CSS
+* HTML & CSS
 
 ### Backend
 
@@ -70,15 +65,13 @@ Zonova provides a responsive hotel listing interface with CRUD operations, searc
 * Native SQL queries
 * No ORM
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 Hotel_Management/
 │
 ├── frontend/
 │   ├── public/
-│   │   └── zonova-bg.png
-│   │
 │   └── src/
 │       ├── components/
 │       │   ├── HotelCard.jsx
@@ -95,8 +88,6 @@ Hotel_Management/
 │       │   └── hotelSlice.js
 │       │
 │       ├── App.jsx
-│       ├── App.css
-│       ├── index.css
 │       └── main.jsx
 │
 ├── backend/
@@ -109,41 +100,45 @@ Hotel_Management/
 └── README.md
 ```
 
-## 🔄 Application Flow
+## Application Flow
 
 ```text
-React Frontend
-      │
-      │ Axios
-      ▼
+ReactJS
+   ↓
+Redux Toolkit
+   ↓
+Axios
+   ↓
 Express REST API
-      │
-      │ Native SQL
-      ▼
+   ↓
 PostgreSQL
 ```
 
-For hotel images:
+For image upload:
 
 ```text
 React Form
-    ↓
+   ↓
 Multer
-    ↓
+   ↓
 backend/uploads/
-    ↓
+   ↓
 Image path stored in PostgreSQL
 ```
 
-## 🔌 API Endpoints
+## API Endpoints
 
-### Get Hotels
+| Method | Endpoint          | Purpose                                        |
+| ------ | ----------------- | ---------------------------------------------- |
+| GET    | `/api/hotels`     | Get hotels with search, filters and pagination |
+| GET    | `/api/hotels/:id` | Get a single hotel                             |
+| POST   | `/api/hotels`     | Add a new hotel                                |
+| PUT    | `/api/hotels/:id` | Update a hotel                                 |
+| DELETE | `/api/hotels/:id` | Delete a hotel                                 |
 
-```http
-GET /api/hotels
-```
+### Query Parameters
 
-Supports:
+The hotel listing API supports:
 
 ```text
 search
@@ -155,60 +150,15 @@ offset
 
 Example:
 
-```http
-GET /api/hotels?minPrice=200&maxPrice=500&limit=3&offset=0
+```text
+/api/hotels?minPrice=200&maxPrice=500&limit=3&offset=0
 ```
 
-Response contains:
+## Database
 
-```json
-{
-  "hotels": [],
-  "total": 0
-}
-```
+PostgreSQL is used to store hotel information.
 
-### Get Single Hotel
-
-```http
-GET /api/hotels/:id
-```
-
-Example:
-
-```http
-GET /api/hotels/7
-```
-
-### Create Hotel
-
-```http
-POST /api/hotels
-```
-
-Uses `multipart/form-data` for image upload and hotel fields.
-
-### Update Hotel
-
-```http
-PUT /api/hotels/:id
-```
-
-Supports updating hotel details and replacing the image when a new image is uploaded.
-
-### Delete Hotel
-
-```http
-DELETE /api/hotels/:id
-```
-
-Deletes the hotel record and its associated uploaded image file.
-
-## 🗄️ Database
-
-The application uses **PostgreSQL** with native SQL queries.
-
-Example hotel fields:
+Main fields include:
 
 ```text
 id
@@ -222,18 +172,18 @@ created_at
 updated_at
 ```
 
-No ORM is used.
+Native SQL queries are used instead of an ORM.
 
-## 🚀 Getting Started
+## Getting Started
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone <your-github-repository-url>
 cd Hotel_Management
 ```
 
-### 2. Backend Setup
+### 2. Backend
 
 ```bash
 cd backend
@@ -257,13 +207,13 @@ Start the backend:
 node server.js
 ```
 
-Backend runs on:
+Backend:
 
 ```text
 http://localhost:5001
 ```
 
-### 3. Frontend Setup
+### 3. Frontend
 
 Open another terminal:
 
@@ -273,83 +223,37 @@ npm install
 npm run dev
 ```
 
-Frontend runs on:
+Frontend:
 
 ```text
 http://localhost:5173
 ```
 
-## 🧭 Main Routes
+## Routes
 
 ```text
-/             → Hotel List Page
-/hotels/:id   → Hotel Detail Page
+/             → Hotel List
+/hotels/:id   → Hotel Details
 ```
 
-## 🧩 Reusable Components
-
-The project follows a component-based structure:
-
-```text
-HotelForm
-→ Reused for Add and Edit
-
-HotelCard
-→ Reused for hotel list items
-
-Pagination
-→ Reusable pagination component
-
-SearchPanel
-→ Reusable search and filter section
-```
-
-## 📱 Responsive UI
-
-The interface is designed to work across:
-
-* Desktop
-* Tablet
-* Mobile
-
-The hotel list switches from multiple columns to a single-column layout on smaller screens.
-
-## 🔐 Notes
-
-* Uploaded images are stored locally on the Node.js server.
-* PostgreSQL is used for persistent hotel data.
-* The backend uses native SQL queries instead of an ORM.
-* Geolocation requires browser permission.
-* The application is designed as a Single Page Application using React Router.
-
-## 👩‍💻 Author
+## Author
 
 **Ramya Ruba**
 
-GitHub:
-https://github.com/ramya67-sky
+GitHub: https://github.com/ramya67-sky
 
-LinkedIn:
-https://www.linkedin.com/in/ramya-ruba/
+LinkedIn: https://www.linkedin.com/in/ramya-ruba/
 
-## 📌 Project Status
+## Project Status
 
-✅ Hotel CRUD
-
-✅ Search & price filters
-
-✅ Dynamic pagination
-
-✅ Image upload
-
-✅ Detail page
-
-✅ Map & geolocation
-
-✅ Redux Toolkit
-
-✅ React Router SPA
-
-✅ SEO metadata
-
-✅ Responsive UI
+* [x] Hotel CRUD
+* [x] Search and price filters
+* [x] Pagination
+* [x] Image upload
+* [x] Hotel detail page
+* [x] Leaflet map
+* [x] Browser geolocation
+* [x] Redux Toolkit
+* [x] React Router
+* [x] SEO metadata
+* [x] Responsive UI
