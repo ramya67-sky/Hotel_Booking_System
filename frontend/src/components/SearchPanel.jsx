@@ -1,6 +1,7 @@
-import { useState } from "react";
 
-function SearchPanel({ onSearch }) {
+import { useEffect, useState } from "react";
+
+function SearchPanel({ onSearch, initialFilters }) {
   const [search, setSearch] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -8,12 +9,23 @@ function SearchPanel({ onSearch }) {
   const [checkOut, setCheckOut] = useState("");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
-  
+
+  useEffect(() => {
+    if (!initialFilters) return;
+
+    setSearch(initialFilters.search || "");
+    setMinPrice(initialFilters.minPrice || "");
+    setMaxPrice(initialFilters.maxPrice || "");
+    setCheckIn(initialFilters.checkIn || "");
+    setCheckOut(initialFilters.checkOut || "");
+    setAdults(initialFilters.adults ?? 2);
+    setChildren(initialFilters.children ?? 0);
+  }, [initialFilters]);
 
   function handleSearch(event) {
     event.preventDefault();
 
-    const searchData = {
+    onSearch({
       search,
       minPrice,
       maxPrice,
@@ -21,11 +33,7 @@ function SearchPanel({ onSearch }) {
       checkOut,
       adults,
       children
-    };
-
-    console.log("Search data:", searchData);
-
-    onSearch(searchData);
+    });
   }
 
   return (
@@ -47,7 +55,6 @@ function SearchPanel({ onSearch }) {
 
         <div className="search-field">
           <label htmlFor="checkIn">Check-in</label>
-
           <input
             id="checkIn"
             type="date"
@@ -58,7 +65,6 @@ function SearchPanel({ onSearch }) {
 
         <div className="search-field">
           <label htmlFor="checkOut">Check-out</label>
-
           <input
             id="checkOut"
             type="date"
@@ -69,7 +75,6 @@ function SearchPanel({ onSearch }) {
 
         <div className="search-field">
           <label htmlFor="adults">Adults</label>
-
           <input
             id="adults"
             type="number"
@@ -83,7 +88,6 @@ function SearchPanel({ onSearch }) {
 
         <div className="search-field">
           <label htmlFor="children">Children</label>
-
           <input
             id="children"
             type="number"
@@ -97,7 +101,6 @@ function SearchPanel({ onSearch }) {
 
         <div className="search-field">
           <label htmlFor="minPrice">Min price</label>
-
           <input
             id="minPrice"
             type="number"
@@ -110,7 +113,6 @@ function SearchPanel({ onSearch }) {
 
         <div className="search-field">
           <label htmlFor="maxPrice">Max price</label>
-
           <input
             id="maxPrice"
             type="number"
@@ -132,3 +134,4 @@ function SearchPanel({ onSearch }) {
 }
 
 export default SearchPanel;
+

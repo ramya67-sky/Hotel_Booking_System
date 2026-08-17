@@ -1,94 +1,116 @@
+
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+
+import { setHotels, removeHotel } from "../store/hotelSlice";
 import HotelCard from "../components/HotelCard";
 import SearchPanel from "../components/SearchPanel";
+import Pagination from "../components/Pagination";
 
-function HotelListPage({ onEditHotel, refreshHotels  }) {
-  const [hasSearched, setHasSearched] = useState(false);
-  const [hotels, setHotels] = useState([]);
-  const [page, setPage] = useState(1);
+const emptySearch = {
+  search: "",
+  minPrice: "",
+  maxPrice: "",
+  checkIn: "",
+  checkOut: "",
+  adults: 2,
+  children: 0
+};
+
+function HotelListPage({ onEditHotel, refreshHotels }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const hotels = useSelector((state) => state.hotels.hotels);
+  const total = useSelector((state) => state.hotels.total);
+
+  const saved = JSON.parse(
+    sessionStorage.getItem("hotelListState") || "null"
+  );
+
+  const [page, setPage] = useState(saved?.page || 1);
+  const [searchData, setSearchData] = useState(
+    saved?.searchData || emptySearch
+  );
+  const [hasSearched, setHasSearched] = useState(
+    saved?.hasSearched || false
+  );
   const [success, setSuccess] = useState("");
 
-  useEffect(() => {
-  async function fetchHotels() {
-    try {
-      const response = await axios.get(
-        "http://127.0.0.1:5001/api/hotels"
-      );
+  const limit = 3;
+  const totalPages = Math.ceil(total / limit);
 
-      setHotels(response.data);
-    } catch (error) {
-      console.error("Failed to fetch hotels:", error);
-    }
+  function saveListState(data, currentPage, searched = true) {
+    sessionStorage.setItem(
+      "hotelListState",
+      JSON.stringify({
+        searchData: data,
+        page: currentPage,
+        hasSearched: searched
+      })
+    );
   }
 
-  fetchHotels();
-}, [refreshHotels]);
-
-  async function handleSearch(searchData) {
-    try {
-      const params = {
-        limit: 3,
-        offset: (page - 1) * 3
-      };
-
-      if (searchData.search) {
-        params.search = searchData.search;
-      }
-
-      if (searchData.minPrice) {
-        params.minPrice = searchData.minPrice;
-      }
-
-      if (searchData.maxPrice) {
-        params.maxPrice = searchData.maxPrice;
-      }
-
-      const response = await axios.get(
-        "http://127.0.0.1:5001/api/hotels",
-        {
-          params: params
-        }
-      );
-
-      setHotels(response.data);
-      setHasSearched(true);
-
-      console.log("Search results:", response.data);
-    } catch (error) {
-      console.error("Search failed:", error);
-    }
-  }
-
-  async function handlePageChange(newPage) {
-    if (newPage < 1 || newPage > 3) {
-      return;
-    }
-
-    setPage(newPage);
-
+  async function loadHotels(data, currentPage) {
     try {
       const response = await axios.get(
         "http://127.0.0.1:5001/api/hotels",
         {
           params: {
-            limit: 3,
-            offset: (newPage - 1) * 3
+            search: data.search,
+            minPrice: data.minPrice,
+            maxPrice: data.maxPrice,
+            limit,
+            offset: (currentPage - 1) * limit
           }
         }
       );
 
-      setHotels(response.data);
+      dispatch(setHotels(response.data));
     } catch (error) {
-      console.error("Failed to change page:", error);
+      console.error("Failed to fetch hotels:", error);
     }
   }
 
-  function handleEditHotel(hotel) {
+  useEffect(() => {
+    if (hasSearched) {
+      loadHotels(searchData, page);
+    }
+  }, [refreshHotels]);
+
+  async function handleSearch(data) {
+    setSearchData(data);
+    setPage(1);
+    setHasSearched(true);
+
+    saveListState(data, 1);
+
+    await loadHotels(data, 1);
+  }
+
+  async function handlePageChange(newPage) {
+    if (newPage < 1 || newPage > totalPages) {
+      return;
+    }
+
+    setPage(newPage);
+    saveListState(searchData, newPage);
+
+    await loadHotels(searchData, newPage);
+  }
+
+  function handleHotelClick(id) {
+    saveListState(searchData, page, hasSearched);
+    navigate(`/hotels/${id}`);
+  }
+
+  function handleEdit(hotel) {
     onEditHotel(hotel);
   }
 
-  async function handleDeleteHotel(id) {
+  async function handleDelete(id) {
     const confirmed = window.confirm(
       "Are you sure you want to permanently delete this hotel?"
     );
@@ -102,11 +124,12 @@ function HotelListPage({ onEditHotel, refreshHotels  }) {
         `http://127.0.0.1:5001/api/hotels/${id}`
       );
 
-      setHotels((currentHotels) =>
-        currentHotels.filter((hotel) => hotel.id !== id)
-      );
-
+      dispatch(removeHotel(id));
       setSuccess("✅ Hotel deleted successfully!");
+
+      setTimeout(() => {
+        setSuccess("");
+      }, 2500);
     } catch (error) {
       console.error("Delete hotel error:", error);
       setSuccess("Failed to delete hotel");
@@ -116,41 +139,31 @@ function HotelListPage({ onEditHotel, refreshHotels  }) {
   return (
     <main className="hotel-page">
 
-      <section className="hero-section">
-        <h2>Find your next stay</h2>
+      <section className="hero-section"></section>
 
-        <p>
-          Discover comfortable places to stay and choose
-          what works best for you.
-        </p>
-      </section>
-
-      <SearchPanel onSearch={handleSearch} />
+      <SearchPanel
+        onSearch={handleSearch}
+        initialFilters={searchData}
+      />
 
       {success && (
-        <p className="form-success">
+        <div className="delete-popup">
           {success}
-        </p>
+        </div>
       )}
 
       {hasSearched && (
         <section className="hotel-section">
 
           <div className="section-heading">
-            <h2>{hotels.length} Hotels Found</h2>
-
-            <p>
-              Explore available stays.
-            </p>
+            <h2>{total} Hotels Found</h2>
+            <p>Explore available stays.</p>
           </div>
 
           {hotels.length === 0 ? (
             <div className="empty-state">
               <h3>No hotels found</h3>
-
-              <p>
-                Try changing your search or price range.
-              </p>
+              <p>Try changing your search or price range.</p>
             </div>
           ) : (
             <div className="hotel-list">
@@ -161,56 +174,19 @@ function HotelListPage({ onEditHotel, refreshHotels  }) {
                   name={hotel.title}
                   description={hotel.description}
                   price={hotel.price}
-                  onEdit={() => handleEditHotel(hotel)}
-                  onDelete={() => handleDeleteHotel(hotel.id)}
+                  onOpen={() => handleHotelClick(hotel.id)}
+                  onEdit={() => handleEdit(hotel)}
+                  onDelete={() => handleDelete(hotel.id)}
                 />
               ))}
             </div>
           )}
 
-          <div className="pagination">
-
-            <button
-              type="button"
-              onClick={() => handlePageChange(page - 1)}
-              disabled={page === 1}
-            >
-              ←
-            </button>
-
-            <button
-              type="button"
-              className={page === 1 ? "active-page" : ""}
-              onClick={() => handlePageChange(1)}
-            >
-              1
-            </button>
-
-            <button
-              type="button"
-              className={page === 2 ? "active-page" : ""}
-              onClick={() => handlePageChange(2)}
-            >
-              2
-            </button>
-
-            <button
-              type="button"
-              className={page === 3 ? "active-page" : ""}
-              onClick={() => handlePageChange(3)}
-            >
-              3
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handlePageChange(page + 1)}
-              disabled={page === 3}
-            >
-              →
-            </button>
-
-          </div>
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
 
         </section>
       )}
@@ -220,3 +196,4 @@ function HotelListPage({ onEditHotel, refreshHotels  }) {
 }
 
 export default HotelListPage;
+

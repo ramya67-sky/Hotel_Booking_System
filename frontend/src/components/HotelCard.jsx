@@ -1,13 +1,18 @@
+
 function HotelCard({
   image,
   name,
   description,
   price,
+  onOpen,
   onEdit,
   onDelete
 }) {
   return (
-    <article className="hotel-card">
+    <article
+      className="hotel-card"
+      onClick={onOpen}
+    >
       <img
         src={image}
         alt={name}
@@ -28,14 +33,20 @@ function HotelCard({
         <div className="hotel-card-actions">
           <button
             type="button"
-            onClick={onEdit}
+            onClick={(event) => {
+              event.stopPropagation();
+              onEdit();
+            }}
           >
             Edit
           </button>
 
           <button
             type="button"
-            onClick={onDelete}
+            onClick={(event) => {
+              event.stopPropagation();
+              onDelete();
+            }}
           >
             Delete
           </button>
