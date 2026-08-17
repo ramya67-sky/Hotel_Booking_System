@@ -242,7 +242,6 @@ http://localhost:5173
 
 GitHub: https://github.com/ramya67-sky
 
-LinkedIn: https://www.linkedin.com/in/ramya-ruba/
 
 ## Project Status
 
