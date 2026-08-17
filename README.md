@@ -335,9 +335,13 @@ https://www.linkedin.com/in/ramya-ruba/
 ## 📌 Project Status
 
 ✅ Hotel CRUD
+
 ✅ Search & price filters
+
 ✅ Dynamic pagination
+
 ✅ Image upload
+
 ✅ Detail page
 ✅ Map & geolocation
 ✅ Redux Toolkit
