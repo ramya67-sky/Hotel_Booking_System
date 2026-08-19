@@ -1,14 +1,9 @@
-
 import { useEffect, useState } from "react";
 
 function SearchPanel({ onSearch, initialFilters }) {
   const [search, setSearch] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(0);
 
   useEffect(() => {
     if (!initialFilters) return;
@@ -16,36 +11,23 @@ function SearchPanel({ onSearch, initialFilters }) {
     setSearch(initialFilters.search || "");
     setMinPrice(initialFilters.minPrice || "");
     setMaxPrice(initialFilters.maxPrice || "");
-    setCheckIn(initialFilters.checkIn || "");
-    setCheckOut(initialFilters.checkOut || "");
-    setAdults(initialFilters.adults ?? 2);
-    setChildren(initialFilters.children ?? 0);
   }, [initialFilters]);
 
   function handleSearch(event) {
     event.preventDefault();
 
-    onSearch({
-      search,
-      minPrice,
-      maxPrice,
-      checkIn,
-      checkOut,
-      adults,
-      children
-    });
+    onSearch({ search, minPrice, maxPrice });
   }
 
   return (
     <form className="search-panel" onSubmit={handleSearch}>
 
-      <div className="search-main">
-        <label htmlFor="search">Search</label>
-
+      <div className="search-field search-field-title">
+        <label htmlFor="search">Search by title</label>
         <input
           id="search"
           type="text"
-          placeholder="Search hotel or destination"
+          placeholder="Search hotel by name"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
@@ -54,58 +36,12 @@ function SearchPanel({ onSearch, initialFilters }) {
       <div className="search-grid">
 
         <div className="search-field">
-          <label htmlFor="checkIn">Check-in</label>
-          <input
-            id="checkIn"
-            type="date"
-            value={checkIn}
-            onChange={(event) => setCheckIn(event.target.value)}
-          />
-        </div>
-
-        <div className="search-field">
-          <label htmlFor="checkOut">Check-out</label>
-          <input
-            id="checkOut"
-            type="date"
-            value={checkOut}
-            onChange={(event) => setCheckOut(event.target.value)}
-          />
-        </div>
-
-        <div className="search-field">
-          <label htmlFor="adults">Adults</label>
-          <input
-            id="adults"
-            type="number"
-            min="1"
-            value={adults}
-            onChange={(event) =>
-              setAdults(Number(event.target.value))
-            }
-          />
-        </div>
-
-        <div className="search-field">
-          <label htmlFor="children">Children</label>
-          <input
-            id="children"
-            type="number"
-            min="0"
-            value={children}
-            onChange={(event) =>
-              setChildren(Number(event.target.value))
-            }
-          />
-        </div>
-
-        <div className="search-field">
           <label htmlFor="minPrice">Min price</label>
           <input
             id="minPrice"
             type="number"
             min="0"
-            placeholder="$50"
+            placeholder="₹500"
             value={minPrice}
             onChange={(event) => setMinPrice(event.target.value)}
           />
@@ -117,7 +53,7 @@ function SearchPanel({ onSearch, initialFilters }) {
             id="maxPrice"
             type="number"
             min="0"
-            placeholder="$500"
+            placeholder="₹5000"
             value={maxPrice}
             onChange={(event) => setMaxPrice(event.target.value)}
           />
@@ -134,4 +70,3 @@ function SearchPanel({ onSearch, initialFilters }) {
 }
 
 export default SearchPanel;
-

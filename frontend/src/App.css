@@ -44,7 +44,7 @@ button {
   width: 100%;
 }
 
-.hero-section {
+/*.hero-section {
   width: 100%;
   min-height: 420px;
   
@@ -59,10 +59,18 @@ button {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  border-radius: 12px;
+}
+*/
+.hero-section {
+  width: 100%;
+  min-height: 420px;
+  background-image: url("/Zonova-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
+/* Search */
 
 /* Search */
 
@@ -76,33 +84,30 @@ button {
   border-radius: 10px;
 }
 
-.search-main {
-  margin-bottom: 20px;
-}
-
-.search-main,
 .search-field {
   display: flex;
   flex-direction: column;
+  margin-bottom: 15px;
 }
 
-.search-main label,
 .search-field label {
   margin-bottom: 6px;
   font-weight: 600;
 }
 
-.search-main input,
-.search-field input,
-.search-field select {
+.search-field input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
 
+.search-field-title {
+  margin-bottom: 20px;
+}
+
 .search-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
@@ -110,7 +115,6 @@ button {
   display: block;
   margin: 20px auto 0;
 }
-
 /* Hotel section */
 
 .hotel-section {

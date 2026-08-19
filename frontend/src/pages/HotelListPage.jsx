@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-import { setHotels, removeHotel } from "../store/hotelSlice";
+import { setHotels, removeHotel } from "../store/HotelSlice";
 import HotelCard from "../components/HotelCard";
 import SearchPanel from "../components/SearchPanel";
 import Pagination from "../components/Pagination";
