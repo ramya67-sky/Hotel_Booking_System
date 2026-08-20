@@ -1,6 +1,6 @@
-# 🌌 Zonova – Hotel Management System
+# 🏨 Zonova – Hotel Management System
 
-Zonova is a full-stack Hotel Management System developed using ReactJS, Redux Toolkit, Node.js, Express.js, and PostgreSQL.
+Zonova(Zone + Nova) is a full-stack Hotel Management System developed using ReactJS, Redux Toolkit, Node.js, Express.js, and PostgreSQL.
 
 The application supports hotel CRUD operations, image upload, search, price filtering, pagination, hotel details, and map-based location display.
 
