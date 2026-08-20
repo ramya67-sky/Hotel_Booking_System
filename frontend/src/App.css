@@ -15,9 +15,9 @@
 
 .brand h1 {
   margin: 0; 
-  font-size: 52px; 
-  font-weight: 700; 
-  letter-spacing: 2px;
+  font-size: 54px; 
+  font-weight: 750; 
+  letter-spacing: 3px;
 }
 
 .brand p { 
@@ -28,7 +28,7 @@
  .add-hotel-button {
  display: block;
   margin: 0 auto; 
-  padding: 11px 22px; 
+  padding: 17px 28px; 
 }
 
 button {
@@ -44,33 +44,14 @@ button {
   width: 100%;
 }
 
-/*.hero-section {
-  width: 100%;
-  min-height: 420px;
-  
-
-  background-image:
-    linear-gradient(
-      rgba(0, 0, 0, 0.15),
-      rgba(0, 0, 0, 0.15)
-    ),
-    url("/zonova-bg.png");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-*/
 .hero-section {
   width: 100%;
   min-height: 420px;
-  background-image: url("/Zonova-bg.png");
+  background-image: url("/zonova-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-
-/* Search */
 
 /* Search */
 

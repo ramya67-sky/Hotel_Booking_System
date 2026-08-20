@@ -12,11 +12,7 @@ import Pagination from "../components/Pagination";
 const emptySearch = {
   search: "",
   minPrice: "",
-  maxPrice: "",
-  checkIn: "",
-  checkOut: "",
-  adults: 2,
-  children: 0
+  maxPrice: ""
 };
 
 function HotelListPage({ onEditHotel, refreshHotels }) {
