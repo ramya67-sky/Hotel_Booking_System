@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect, useState } from "react";
@@ -42,7 +41,6 @@ function App() {
       <BrowserRouter>
         <div className="app-container">
 
-        
 <header className="app-header">
   <div className="brand">
     <h1> 🏨Zonova</h1>
@@ -56,8 +54,6 @@ function App() {
     + Add Hotel
   </button>
 </header>
-
-
 
           {showForm && (
             <HotelForm
@@ -90,4 +86,3 @@ function App() {
 }
 
 export default App;
-

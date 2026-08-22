@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -118,94 +117,94 @@ function HotelForm({ editingHotel, onHotelSaved }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="hotel-form">
+    <form onSubmit = {handleSubmit} className = "hotel-form">
       <h2>{isEditing ? "Edit Hotel" : "Add Hotel"}</h2>
 
-      {success && <p className="form-success">{success}</p>}
-      {error && <p className="form-error">{error}</p>}
+      {success && <p className = "form-success">{success}</p>}
+      {error && <p className = "form-error">{error}</p>}
 
-      <div className="form-group">
+      <div className = "form-group">
         <label>Hotel Title</label>
         <input
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
+          name = "title"
+          value = {formData.title}
+          onChange = {handleChange}
         />
       </div>
 
-      <div className="form-group">
+      <div className = "form-group">
         <label>Description</label>
         <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
+          name = "description"
+          value = {formData.description}
+          onChange = {handleChange}
         />
       </div>
 
-      <div className="form-row">
-        <div className="form-group">
+      <div className = "form-row">
+        <div className = "form-group">
           <label>Latitude</label>
           <input
-            name="latitude"
-            type="number"
-            step="any"
-            value={formData.latitude}
-            onChange={handleChange}
+            name = "latitude"
+            type = "number"
+            step = "any"
+            value = {formData.latitude}
+            onChange = {handleChange}
           />
         </div>
 
-        <div className="form-group">
+        <div className = "form-group">
           <label>Longitude</label>
           <input
-            name="longitude"
-            type="number"
-            step="any"
-            value={formData.longitude}
-            onChange={handleChange}
+            name = "longitude"
+            type = "number"
+            step = "any"
+            value = {formData.longitude}
+            onChange = {handleChange}
           />
         </div>
       </div>
 
-      <div className="form-group">
+      <div className = "form-group">
         <label>Price</label>
         <input
-          name="price"
-          type="number"
-          min="0"
-          step="any"
-          value={formData.price}
-          onChange={handleChange}
+          name = "price"
+          type = "number"
+          min = "0"
+          step = "any"
+          value = {formData.price}
+          onChange = {handleChange}
         />
       </div>
 
-      <div className="form-group">
+      <div className = "form-group">
         <label>Hotel Image</label>
         <input
-          name="image"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
+          name = "image"
+          type = "file"
+          accept = "image/*"
+          onChange = {handleImageChange}
         />
       </div>
 
       {isEditing && existingImage && !imagePreview && (
-        <div className="image-preview">
+        <div className = "image-preview">
           <p>Current Image:</p>
           <img
-            src={`http://127.0.0.1:5001${existingImage}`}
-            alt="Current hotel"
+            src = {`http://127.0.0.1:5001${existingImage}`}
+            alt = "Current hotel"
           />
         </div>
       )}
 
       {imagePreview && (
-        <div className="image-preview">
+        <div className = "image-preview">
           <p>New Image:</p>
-          <img src={imagePreview} alt="Preview" />
+          <img src = {imagePreview} alt = "Preview" />
         </div>
       )}
 
-      <button type="submit" className="save-button">
+      <button type = "submit" className = "save-button">
         {isEditing ? "Update Hotel" : "Save Hotel"}
       </button>
     </form>
@@ -213,4 +212,3 @@ function HotelForm({ editingHotel, onHotelSaved }) {
 }
 
 export default HotelForm;
-

@@ -43,7 +43,7 @@ function HotelDetailPage() {
   ];
 
   return (
-    <main className="hotel-detail">
+    <main className = "hotel-detail">
 
     <Helmet>
   <title>
@@ -53,16 +53,15 @@ function HotelDetailPage() {
   </title>
 
   <meta
-    name="description"
-    content={hotel?.description || "Find your next stay with Zonova."}
+    name = "description"
+    content = {hotel?.description || "Find your next stay with Zonova."}
   />
    </Helmet>
 
-
       <img
-        src={`http://127.0.0.1:5001${hotel.image}`}
-        alt={hotel.title}
-        className="detail-image"
+        src = {`http://127.0.0.1:5001${hotel.image}`}
+        alt = {hotel.title}
+        className = "detail-image"
       />
 
       <h1>{hotel.title}</h1>
@@ -72,23 +71,23 @@ function HotelDetailPage() {
       <p>Latitude: {hotel.latitude}</p>
       <p>Longitude: {hotel.longitude}</p>
 
-      <div className="hotel-map">
+      <div className = "hotel-map">
         <MapContainer
-          center={location}
-          zoom={12}
-          style={{ height: "400px", width: "100%" }}
+          center = {location}
+          zoom = {12}
+          style = {{ height: "400px", width: "100%" }}
         >
           <TileLayer
-            attribution='&copy; OpenStreetMap contributors'
-            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution = '&copy; OpenStreetMap contributors'
+            url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <CircleMarker center={location}>
+          <CircleMarker center = {location}>
             <Popup>{hotel.title}</Popup>
           </CircleMarker>
 
           {userLocation && (
-            <CircleMarker center={userLocation} pathOptions={{ color: "blue" }}>
+            <CircleMarker center = {userLocation} pathOptions = {{ color: "blue" }}>
               <Popup>Your current location</Popup>
             </CircleMarker>
           )}

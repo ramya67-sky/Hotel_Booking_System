@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -133,55 +132,55 @@ function HotelListPage({ onEditHotel, refreshHotels }) {
   }
 
   return (
-    <main className="hotel-page">
+    <main className = "hotel-page">
 
-      <section className="hero-section"></section>
+      <section className = "hero-section"></section>
 
       <SearchPanel
-        onSearch={handleSearch}
-        initialFilters={searchData}
+        onSearch = {handleSearch}
+        initialFilters = {searchData}
       />
 
       {success && (
-        <div className="delete-popup">
+        <div className = "delete-popup">
           {success}
         </div>
       )}
 
       {hasSearched && (
-        <section className="hotel-section">
+        <section className = "hotel-section">
 
-          <div className="section-heading">
+          <div className = "section-heading">
             <h2>{total} Hotels Found</h2>
             <p>Explore available stays.</p>
           </div>
 
           {hotels.length === 0 ? (
-            <div className="empty-state">
+            <div className = "empty-state">
               <h3>No hotels found</h3>
               <p>Try changing your search or price range.</p>
             </div>
           ) : (
-            <div className="hotel-list">
+            <div className = "hotel-list">
               {hotels.map((hotel) => (
                 <HotelCard
-                  key={hotel.id}
-                  image={`http://127.0.0.1:5001${hotel.image}`}
-                  name={hotel.title}
-                  description={hotel.description}
-                  price={hotel.price}
-                  onOpen={() => handleHotelClick(hotel.id)}
-                  onEdit={() => handleEdit(hotel)}
-                  onDelete={() => handleDelete(hotel.id)}
+                  key = {hotel.id}
+                  image = {`http://127.0.0.1:5001${hotel.image}`}
+                  name = {hotel.title}
+                  description = {hotel.description}
+                  price = {hotel.price}
+                  onOpen = {() => handleHotelClick(hotel.id)}
+                  onEdit = {() => handleEdit(hotel)}
+                  onDelete = {() => handleDelete(hotel.id)}
                 />
               ))}
             </div>
           )}
 
           <Pagination
-            page={page}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
+            page = {page}
+            totalPages = {totalPages}
+            onPageChange = {handlePageChange}
           />
 
         </section>
@@ -192,4 +191,3 @@ function HotelListPage({ onEditHotel, refreshHotels }) {
 }
 
 export default HotelListPage;
-

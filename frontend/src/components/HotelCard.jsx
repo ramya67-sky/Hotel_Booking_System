@@ -1,4 +1,3 @@
-
 function HotelCard({
   image,
   name,
@@ -57,4 +56,3 @@ function HotelCard({
 }
 
 export default HotelCard;
-

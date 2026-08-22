@@ -1,4 +1,3 @@
-
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -206,7 +205,6 @@ app.put("/api/hotels/:id", upload.single("image"), async (req, res) => {
         message: "Hotel not found"
       });
     }
-
     const oldHotel = existingHotel.rows[0];
 
     let imagePath = oldHotel.image;
